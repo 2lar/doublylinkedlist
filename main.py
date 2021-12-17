@@ -8,7 +8,10 @@ import random
 import linkedlist
 l = linkedlist
 
-sep = "--------"
+class sep():
+    def __init__(self):
+        string = "-----------------------"
+        print(string)
 
 x = l.doublylinkedlist()
 for i in range(10):
@@ -39,14 +42,13 @@ def a():
     x2.printlist()
     x.reverselist()
     x.printlist()
-    print()
+    sep()
 
 def b():
     x3.copylist(x)
     x.printlist()
     x4.copylist(x3)
     x4.printlist()
-    print(sep)
     for i in range(3):
         x3.deleteval(i)
     x.printlist()
@@ -56,7 +58,7 @@ def b():
     print("testing this node print")
     x9 = l.copyfromhead(x3.head.next.next)
     l.headprint(x9)
-    print()
+    sep()
 
 def c():
     print("testing pops, delete, change")
@@ -68,7 +70,7 @@ def c():
     x.deleteval(7)
     x.changeval(9,69)
     x.printlist()
-    print()
+    sep()
     
 def d():
     print("test sorting")
@@ -78,7 +80,7 @@ def d():
     x5.printlist()
     x5.sorting()
     x5.printlist()
-    print()
+    sep()
     
 def e():
     print("join and similarity")
@@ -104,7 +106,7 @@ def e():
     print(l.howsimilar(jl1,jl2))
     print(l.howsimilar(jl1,listofj))
     print(l.howsimilar(jl1,jl1))
-    print()
+    sep()
 
 def f():
     print("test string data")
@@ -119,6 +121,7 @@ def f():
             j.lappend("hellow world")
         jcount+=5
         j.printlist()
+    sep()
         
 
 if __name__ == "__main__":
