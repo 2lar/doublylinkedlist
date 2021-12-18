@@ -10,13 +10,32 @@ class Node:
         self.data = data
         self.next = None
         self.prev = None
+    
+    def nodedata(self):
+        print(self.data)
         
 class doublylinkedlist:
     def __init__(self):
         self.head = None
         self.tail = None
         self.size = 0
-        
+    
+    #iterator
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current.data
+            current = current.next
+            
+    #this is an iterator version taking it in reverse
+    #this does not modify the list into a reverse order
+    #there is a function call reverselist() to reverse the order
+    def __reversed__(self):
+        current = self.tail
+        while current:
+            yield current.data
+            current = current.prev
+    
     #copy and delete
     def deletelist(self):
         current = self.head
@@ -201,7 +220,7 @@ class doublylinkedlist:
             node = node.prev
         if temp:
             self.head = temp.prev
-        
+            
     def sorting(self):
         if self.empty(): return
         sortedlist = doublylinkedlist()
@@ -313,3 +332,7 @@ def headprint(node):
         printed.append(str(node.data))
         node = node.next
     print("This list is: {}".format(' '.join(printed)))
+        
+            
+
+        
