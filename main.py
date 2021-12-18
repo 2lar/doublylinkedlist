@@ -102,7 +102,7 @@ def e():
     listofj = l.multijoinedlists(jl1,jl2,jl3,jl4)
     listofj.printlist()
     print(listofj.size)
-    
+    sep()
     print(l.howsimilar(jl1,jl2))
     print(l.howsimilar(jl1,listofj))
     print(l.howsimilar(jl1,jl1))
@@ -131,5 +131,3 @@ if __name__ == "__main__":
     d()
     e()
     f()
-        
-    
