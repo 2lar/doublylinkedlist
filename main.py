@@ -122,7 +122,25 @@ def f():
         jcount+=5
         j.printlist()
     sep()
-        
+
+def g():
+    print("Testing Tterators")
+    itr = iter(x5)
+    rev = reversed(x5)
+    printer = []
+    reverse = []
+    while True:
+        try:
+            item = next(itr)
+            item1 = next(rev)
+            printer.append(item)
+            reverse.append(item1)
+            
+        except StopIteration:
+            print("List of items from iterator:",printer)
+            print("List of items in reversed:", reverse)
+            break
+    sep()
 
 if __name__ == "__main__":
     a()
@@ -131,3 +149,6 @@ if __name__ == "__main__":
     d()
     e()
     f()
+    g()
+        
+    
