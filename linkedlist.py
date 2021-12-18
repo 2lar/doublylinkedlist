@@ -6,7 +6,6 @@ Created on Fri Dec 17 00:08:49 2021
 """
 
 class Node:
-    
     def __init__(self, data):
         self.data = data
         self.next = None
@@ -17,12 +16,85 @@ class doublylinkedlist:
         self.head = None
         self.tail = None
         self.size = 0
-       
+        
+    #copy and delete
+    def deletelist(self):
+        current = self.head
+        while current:
+            nxt = current.next
+            del current.data
+            current = nxt
+        self.head = self.tail = None
+        self.size = 0
+            
+    def copylist(self, other):
+        if not self.empty():
+            self.deletelist()
+        if other.head is not None:
+            current = other.head
+            while current:
+                self.lappend(current.data)
+                current = current.next
+            self.size = other.size
+            
+    #Functions that check within
     def empty(self):
         if self.head is None:
             return True
         return False
     
+    def findval(self,val):
+        current = self.head
+        if current is None:
+            print("No value because list is empty")
+            return
+        counter = 0
+        while current:
+            if current.data == val:
+                print("This value is in position/index:",counter)
+                return current
+            counter+=1
+            current = current.next
+        print("No node contains this value")
+        return
+    
+    def high(self):
+        if self.empty(): return
+        highval, current = self.head.data, self.head.next
+        while current:
+            if current.data > highval:
+                highval = current.data
+            current = current.next
+        print("The high value is:",highval)
+    
+    def findhigh(self):
+        if self.empty(): return
+        highval, current = self.head.data, self.head.next
+        while current:
+            if current.data > highval:
+                highval = current.data
+            current = current.next
+        return highval
+        
+    def low(self):
+        if self.empty(): return
+        lowval, current = self.head.data, self.head.next
+        while current:
+            if current.data < lowval:
+                lowval = current.data
+            current = current.next
+        print("The low value is:",lowval)
+    
+    def findlow(self):
+        if self.empty(): return
+        lowval, current = self.head.data, self.head.next
+        while current:
+            if current.data < lowval:
+                lowval = current.data
+            current = current.next
+        return lowval
+    
+    #Functions that modify the list
     def lappend(self,new_data):
         
         new_node = Node(new_data)
@@ -50,27 +122,6 @@ class doublylinkedlist:
         self.size+=1
         return
 
-    def printlist(self, *args):
-        printed = []
-        node = self.head
-        
-        if len(args) == 0:
-            if node is None:
-                print("The list is empty")
-                return
-        
-        elif len(args) == 1:
-            node = args[0]
-            
-        else:
-            print("there are too many arguments")
-            return
-            
-        while node:
-            printed.append(str(node.data))
-            node = node.next
-        print("This list is: {}".format(' '.join(printed)))   
-        return
         
     def popfront(self):
         if self.empty():
@@ -81,51 +132,15 @@ class doublylinkedlist:
     def popback(self):
         if self.empty():
             return
-        current = self.tail.prev
-        current.next = None
+        current, current.next = self.tail.prev, None
         self.prev = None
         self.tail = current
         self.size-=1
-        
-    def deletelist(self):
-        current = self.head
-        while current:
-            nxt = current.next
-            del current.data
-            current = nxt
-        self.head = self.tail = None
-        self.size = 0
-            
-    def copylist(self, other):
-        if not self.empty():
-            self.deletelist()
-        if other.head is not None:
-            current = other.head
-            while current:
-                self.lappend(current.data)
-                current = current.next
-            self.size = other.size
-                
-    def findval(self,val):
-        current = self.head
-        if current is None:
-            print("No value because list is empty")
-            return
-        counter = 0
-        while current:
-            if current.data == val:
-                print("This value is in position/index:",counter)
-                return current
-            counter+=1
-            current = current.next
-        print("No node contains this value")
-        return
-    
+
     def deleteval(self,val):
         if self.empty():
             return
-        node = self.head
-        prev = None
+        node, prev = self.head, None
         if self.size == 1 and self.head.data == val:
             self.head = self.tail = None
             return
@@ -146,9 +161,6 @@ class doublylinkedlist:
                 self.size-=1
             node = node.next
         print("Successfully deleted the value:",val)
-                
-                
-            
     
     def changeval(self,val,newval):
         if self.empty(): return
@@ -161,46 +173,6 @@ class doublylinkedlist:
         if current is None:
             print(val, "does not exist in the list")
         print("Success:", val, "changed into", newval)
-        
-    def high(self):
-        if self.empty(): return
-        highval = self.head.data
-        current = self.head.next
-        while current:
-            if current.data > highval:
-                highval = current.data
-            current = current.next
-        print("The high value is:",highval)
-    
-    def findhigh(self):
-        if self.empty(): return
-        highval = self.head.data
-        current = self.head.next
-        while current:
-            if current.data > highval:
-                highval = current.data
-            current = current.next
-        return highval
-        
-    def low(self):
-        if self.empty(): return
-        lowval = self.head.data
-        current = self.head.next
-        while current:
-            if current.data < lowval:
-                lowval = current.data
-            current = current.next
-        print("The low value is:",lowval)
-    
-    def findlow(self):
-        if self.empty(): return
-        lowval = self.head.data
-        current = self.head.next
-        while current:
-            if current.data < lowval:
-                lowval = current.data
-            current = current.next
-        return lowval
         
     def addlist(self,other):
         if self.empty() and other.empty(): return
@@ -220,18 +192,8 @@ class doublylinkedlist:
             self.size += other.size
             return self
         
-    def datalist(self):
-        node = self.head
-        dlist = []
-        while node:
-            dlist.append(node.data)
-            node = node.next
-        return dlist
-    
     def reverselist(self):
-        temp = None
-        node  = self.head
-        
+        temp, node = None, self.head
         while node:
             temp = node.prev
             node.prev = node.next
@@ -242,10 +204,8 @@ class doublylinkedlist:
         
     def sorting(self):
         if self.empty(): return
-        
         sortedlist = doublylinkedlist()
         traversed = []
-        
         node = self.head
         while node:
             traversed.append(node.data)
@@ -253,13 +213,42 @@ class doublylinkedlist:
         traversed.sort()
         for i in traversed:
             sortedlist.lappend(i)
-            
         self.copylist(sortedlist)
 
+    def printlist(self, *args):
+        printed = []
+        node = self.head
+        
+        if len(args) == 0:
+            if node is None:
+                print("The list is empty")
+                return
+        elif len(args) == 1:
+            node = args[0]
+        else:
+            print("there are too many arguments")
+            return
+        while node:
+            printed.append(str(node.data))
+            node = node.next
+        print("This list is: {}".format(' '.join(printed)))   
+        return
+        
+    def datalist(self):
+        node = self.head
+        dlist = []
+        while node:
+            dlist.append(node.data)
+            node = node.next
+        return dlist
+    
+    
+    
+#Functions out of this DoublyLinkedList
 def multijoinedlists(*args):
     numargs = len(args)
     if numargs < 2:
-        print("Too few lists")
+        print("Too few list arguments")
         return
     elif numargs == 2:
         return newcombinedlist(args[0], args[1])
@@ -275,18 +264,15 @@ def multijoinedlists(*args):
     return newlist
         
 def howsimilar(l1,l2):
-    node1 = l1.head
-    node2 = l2.head
+    node1, node2 = l1.head, l2.head
     
     sdata = []
-    data1 = l1.datalist()
-    data2 = l2.datalist()
+    data1, data2 = l1.datalist(), l2.datalist()
     simindex = 0.0
     while node1:
         if node1.data == node2.data:
             sdata.append(node1.data)
-        node1 = node1.next
-        node2 = node2.next
+        node1, node2 = node1.next, node2.next
     if len(sdata) == 0:
         print("There are no shared values")
     else: print("These are shared values", sdata)
@@ -302,19 +288,15 @@ def newcombinedlist(l1,l2):
         print("this is just other list1")
         return l1
     else:
-        newlist1 = doublylinkedlist()
-        newlist2 = doublylinkedlist()
-        newlist1.copylist(l1)
-        newlist2.copylist(l2)
+        newlist1, newlist2 = doublylinkedlist(), doublylinkedlist()
+        newlist1.copylist(l1), newlist2.copylist(l2)
         newlist1.tail.next = newlist2.head
         newlist2.head.prev = newlist1.tail
         newlist1.size = (l1.size + l2.size)
         return newlist1
         
 def copyfromhead(head):
-    current = head 
-    newList = None
-    tail = None 
+    current, newList, tail = head, None, None
     while current:
         if newList is None:
             newList = Node(current.data)
@@ -331,7 +313,3 @@ def headprint(node):
         printed.append(str(node.data))
         node = node.next
     print("This list is: {}".format(' '.join(printed)))
-        
-            
-
-        
